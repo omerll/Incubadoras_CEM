@@ -1,1 +1,71 @@
+esphome:
+  name: incubator
+  platform: ESP32
+  board: esp32dev
+
+# Enable logging
+logger:
+
+ota:
+  password: "467658528058439629193908a8a43e10"
+
+wifi:
+  ssid: "labcem"
+  password: "bobesponja11"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Incubadora Wifi"
+    password: "bobesponja11"
+captive_portal:
+
+# Enable Home Assistant API
+api:
+
+  
+# Example configuration entry
+uart:
+  tx_pin: 17
+  rx_pin: 16
+  baud_rate: 9600
+
+# Example configuration entry
+i2c:
+  sda: 21
+  scl: 22
+
+
+ads1115:
+  - address: 0x48    
+
+# Example configuration entry
+sensor:
+  - platform: sht3xd
+    temperature:
+      name: "Temperatura Incubadora"
+    humidity:
+      name: "Humedad relativa Incubadora"
+    address: 0x45
+    update_interval: 2s
+    
+    
+  - platform: ads1115
+    name: "Humedad Relativa Sustrato"
+    multiplexer: 'A1_GND'
+    gain: 4.096
+    update_interval: 200ms
+    accuracy_decimals: 1
+    unit_of_measurement: "%"
+    filters:
+    - median:
+        window_size: 10
+        send_every: 10
+        send_first_at: 10    
+    - calibrate_linear:
+          - 1.3 -> 100.0
+          - 2.9 -> 0.0
+    - lambda: if (x <= 0) return {0}; else return x; 
+    - lambda: if (x <= 100) return x; else return {100}; 
+    
+
 
