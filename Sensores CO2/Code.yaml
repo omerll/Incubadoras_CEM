@@ -1,1 +1,55 @@
-hwe
+esphome:
+  name: co2m
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "28ef694ea9a828f39fe939be2906ddf8"
+
+wifi:
+  ssid: "labcem"
+  password: "bobesponja11"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Co2M Fallback Hotspot"
+    password: "bobesponja11"
+
+captive_portal:
+
+# Example configuration entry
+uart:
+- id: uart_0
+  rx_pin: GPIO19
+  tx_pin: GPIO21
+  baud_rate: 9600
+- id: uart_2
+  rx_pin: GPIO16
+  tx_pin: GPIO17
+  baud_rate: 9600
+
+sensor:
+  - platform: mhz19
+    uart_id: uart_0
+    co2:
+      name: "Sensor 1 CO2"
+    temperature:
+      name: "Sensor 1 Temp"
+    update_interval: 15s
+    automatic_baseline_calibration: false
+  - platform: mhz19
+    uart_id: uart_2
+    co2:
+      name: "Sensor 2 CO2"
+    temperature:
+      name: "Sensor 2 Temp"
+    update_interval: 15s
+    automatic_baseline_calibration: false
