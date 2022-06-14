@@ -1,1 +1,35 @@
-s
+esphome:
+  name: heatgun
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "17c98981a6e765b2468e28160c59473d"
+
+wifi:
+  ssid: "labcem"
+  password: "bobesponja11"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Heatgun Fallback Hotspot"
+    password: "bobesponja11"
+
+captive_portal:
+
+# Example configuration entry
+switch:
+  - platform: gpio
+    pin: GPIO32
+    name: "Pistola de Calor"
