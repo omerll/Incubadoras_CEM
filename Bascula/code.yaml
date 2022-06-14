@@ -1,1 +1,70 @@
-awd
+esphome:
+  name: scale
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "467658528058439629193908a8a43e10"
+
+wifi:
+  ssid: "labcem"
+  password: "bobesponja11"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Scale Fallback Hotspot"
+    password: "bobesponja11"
+
+captive_portal:
+
+sensor:
+  - platform: hx711
+    name: "Peso bascula"
+    dout_pin: GPIO23
+    clk_pin: GPIO22
+    gain: 128
+    update_interval: 1s
+    unit_of_measurement: g
+    filters:
+      - median:
+          window_size: 5
+          send_every: 5
+          send_first_at: 5    
+      - calibrate_linear:  
+          -   -508800 -> 0
+          -   -428180 -> 170
+          -   -376640 -> 279
+          -   -263700 -> 518
+#      - offset: -0.75
+      - lambda: if (x <= 0) return {0}; else return x;
+    accuracy_decimals: 0
+#  - platform: hx711
+#    name: "Peso bascula 2"
+#    dout_pin: 14
+#    clk_pin: 12
+#    gain: 128
+#    update_interval: 1s
+#    unit_of_measurement: g
+#    filters:
+#      - median:
+#          window_size: 5
+#          send_every: 5
+#          send_first_at: 5    
+#      - calibrate_linear:  
+#          -   -508800 -> 0
+#          -   -428180 -> 170
+#          -   -376640 -> 279
+#          -   -263700 -> 518
+#      - offset: -0.75
+#      - lambda: if (x <= 0) return {0}; else return x;
+#    accuracy_decimals: 0
+    
