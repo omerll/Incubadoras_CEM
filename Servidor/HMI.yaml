@@ -1,0 +1,159 @@
+title: Incubadora
+views:
+  - path: default_view
+    title: Home
+    cards:
+      - type: thermostat
+        entity: climate.control_temp_incubadora
+        theme: Mushroom
+      - type: humidifier
+        entity: humidifier.control_humedad_incubadora
+        name: Control Humedad del Sustrato
+      - square: true
+        columns: 2
+        type: grid
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: switch.pistola_de_calor
+            icon: mdi:pistol
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: switch.humidificador
+            icon: mdi:air-humidifier
+      - type: gauge
+        entity: sensor.scale1
+        unit: g
+        max: 1000
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.humedad_relativa_incubadora
+        name: Humedad Relativa Incubadora
+        icon: mdi:water-percent
+        unit: ' %'
+        line_color: blue
+        align_state: center
+        hours_to_show: 0.1
+        points_per_hour: 3600
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.temperatura_incubadora
+        name: Temperatura Incubadora
+        icon: hass:thermometer
+        unit: ' C'
+        line_color: orange
+        align_state: center
+        hours_to_show: 0.1
+        points_per_hour: 3600
+      - show_name: true
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: script.1652897414982
+        show_state: false
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.humedad_relativa_sustrato
+        name: Humedad Relativa Sustrato
+        icon: mdi:water
+        unit: ' %'
+        line_color: cyan
+        align_state: center
+        hours_to_show: 0.1
+        points_per_hour: 3600
+      - type: grid
+        cards:
+          - type: gauge
+            entity: sensor.temperatura_incubadora
+            min: 15
+            max: 80
+            severity:
+              green: 30
+              yellow: 60
+              red: 70
+          - type: gauge
+            entity: sensor.humedad_relativa_incubadora
+            min: 0
+            max: 100
+            severity:
+              green: 50
+              yellow: 18
+              red: 10
+          - type: gauge
+            entity: sensor.humedad_relativa_sustrato
+            min: 0
+            max: 100
+            severity:
+              green: 50
+              yellow: 30
+              red: 15
+      - type: entities
+        entities:
+          - entity: sensor.temperatura_incubadora
+          - entity: sensor.humedad_relativa_incubadora
+          - entity: sensor.humedad_relativa_sustrato
+          - entity: sensor.sensor_1_co2
+            name: CO2 Entrada
+          - entity: sensor.sensor_1_temp
+            name: Temperatura Aire Entrada
+          - entity: sensor.sensor_2_co2
+            name: CO2 Salida
+          - entity: sensor.sensor_2_temp
+            name: Temperatura Aire Salida
+          - entity: sensor.scale1
+            name: Peso Bascula
+            icon: mdi:weight-gram
+        title: Sensores
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.sensor_1_co2
+        name: CO2 Entrada
+        icon: mdi:water
+        unit: ' ppm'
+        line_color: grey
+        align_state: center
+        hours_to_show: 0.1
+        points_per_hour: 3600
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.sensor_2_co2
+        name: CO2 Salida
+        icon: mdi:water
+        unit: ' ppm'
+        line_color: grey
+        align_state: center
+        hours_to_show: 0.1
+        points_per_hour: 3600
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.sensor_1_temp
+        name: Temp Aire Entrada
+        icon: mdi:thermometer
+        unit: ' C'
+        line_color: red
+        align_state: center
+        hours_to_show: 0.1
+        points_per_hour: 3600
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.sensor_2_temp
+        name: Temp Aire Salida
+        icon: mdi:thermometer
+        unit: ' C'
+        line_color: red
+        align_state: center
+        hours_to_show: 0.1
+        points_per_hour: 3600
+      - show_current: true
+        show_forecast: false
+        type: weather-forecast
+        entity: weather.itesm_cem
+        name: ITESM
+        secondary_info_attribute: wind_speed
