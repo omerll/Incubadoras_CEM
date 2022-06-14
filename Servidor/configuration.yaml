@@ -1,0 +1,57 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+favicon:
+  title: Lab ITESM CEM
+  icon_path: /local/favicons
+
+climate:
+  - platform: generic_thermostat
+    name: Control Temp Incubadora
+    heater: switch.pistola_de_calor
+    target_sensor: sensor.temperatura_incubadora
+    max_temp: 65
+    min_temp: 20
+    target_temp: 58
+
+generic_hygrostat:
+  - name: Control Humedad Incubadora
+    humidifier: switch.humidificador
+    target_sensor: sensor.humedad_relativa_sustrato
+    max_humidity: 100
+    min_humidity: 10
+    target_humidity: 50
+    
+sensor:    
+ - platform: template
+   sensors:
+      scale1:
+        friendly_name: "Bascula 1"
+        value_template: >-
+          {% set p = states('sensor.peso_bascula') | int %}
+          {% set o = (states('input_number.offset1') | int) %} 
+          {{ (((p)-o)  | int) }}
+      scale2:
+        friendly_name: "Bascula 2"
+        value_template: >-
+          {% set p = states('sensor.peso_bascula2') | int %}
+          {% set o = (states('input_number.offset2') | int) %} 
+          {{ (((p)-o)  | int) }}
+      scale3:
+        friendly_name: "Bascula 3"
+        value_template: >-
+          {% set p = states('sensor.peso_bascula3') | int %}
+          {% set o = (states('input_number.offset3') | int) %} 
+          {{ (((p)-o)  | int) }}
