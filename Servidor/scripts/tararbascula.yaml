@@ -1,1 +1,11 @@
-
+alias: Tarar Bascula 1
+sequence:
+  - service: input_number.set_value
+    target:
+      entity_id: input_number.offset1
+    data_template:
+      value: |
+        {% set offset = (states('sensor.peso_bascula') | int) %}
+          {{ offset }}
+mode: single
+icon: mdi:weight-gram
